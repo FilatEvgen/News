@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/mainFragment"
+        android:title=""
+        android:icon="@+id/ic_home" />
+    <item android:id="@+id/searchFragment"
+        android:title=""
+        android:icon="@+id/baseline_ads_click_24" />
+    <item android:id="@+id/favoriteFragment"
+        android:title=""
+        android:icon="@+id/baseline_anchor_24" />
+</menu>
