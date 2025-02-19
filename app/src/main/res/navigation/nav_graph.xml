@@ -6,6 +6,16 @@
     app:startDestination="@id/mainFragment" >
 
     <fragment
+        android:id="@+id/splashFragment"
+        android:name="ru.kosproger.news.ui.splash.SplashFragment"
+        android:label="SplashFragment" >
+
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@+id/mainFragment"
+            />
+    </fragment>
+    <fragment
         android:id="@+id/mainFragment"
         android:name="ru.kosproger.news.ui.main.MainFragment"
         android:label="fragment_main"
