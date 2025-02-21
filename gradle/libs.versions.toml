@@ -1,6 +1,6 @@
 [versions]
 agp = "8.8.1"
-kotlin = "2.0.0"
+kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -9,15 +9,16 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
-lifecycleRuntimeKtx = "2.4.1"
-hilt = "2.41"
+lifecycleRuntimeKtx = "2.8.7"
+hilt = "2.51.1"
 nav = "2.8.7"
-room = "2.4.2"
-coroutines = "1.5.2"
+room = "2.6.1"
+coroutines = "1.7.3"
 retrofit = "2.9.0"
 okhttp = "4.9.0"
 glide = "4.13.0"
 navVersion = "2.4.2"
+javapoet = "1.13.0"
 
 
 [libraries]
@@ -51,6 +52,7 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "nav" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

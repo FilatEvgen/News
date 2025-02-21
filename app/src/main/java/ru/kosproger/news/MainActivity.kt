@@ -3,9 +3,10 @@ package ru.kosproger.news
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.kosproger.news.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.navigate(R.id.splashFragment)
         // Установите слушатель для навигации
-        binding.bottomNavMenu.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (val id = item.itemId) {
                 R.id.mainFragment, R.id.searchFragment, R.id.favoriteFragment -> {
                     navController.navigate(id)
