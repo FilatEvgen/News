@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="hello_search_fragment">Hello search fragment</string>
+    <string name="hello_favorite_fragment">Hello favorite fragment</string>
+    <string name="popular_news">Popular News</string>
+    <string name="logo">LOGO!</string>
+</resources>

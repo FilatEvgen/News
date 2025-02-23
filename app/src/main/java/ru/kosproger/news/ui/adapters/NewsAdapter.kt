@@ -1,0 +1,91 @@
+package ru.kosproger.news.ui.adapters
+
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import ru.kosproger.news.R
+import ru.kosproger.news.databinding.ItemArticleBinding
+import ru.kosproger.news.models.Article
+
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+
+    inner class NewsViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(article: Article, onItemClickListener: ((Article) -> Unit)?) {
+            Glide.with(binding.root)
+                .load("/home/user/Изображения/Обои/4ce686e077b111eea7923a7ca4cc1bdc upscaled.jpeg")
+                .placeholder(R.drawable.ic_share) // Изображение-заполнитель
+                .error(R.drawable.error_image) // Изображение в случае ошибки
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Логируем ошибку
+                        e?.logRootCauses("Glide Error")
+                        return false // Возвращаем false, чтобы Glide продолжал обрабатывать ошибку
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: com.bumptech.glide.load.DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Здесь вы можете выполнить действия, когда ресурс успешно загружен
+                        return false // Возвращаем false, чтобы Glide продолжал обрабатывать ресурс
+                    }
+                })
+                .into(binding.articleImage)
+
+            binding.articleImage.clipToOutline = true
+            binding.articleTitle.text = article.title
+            binding.articleDate.text = article.publishedAt
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(article)
+            }
+        }
+    }
+
+    private val callback = object : DiffUtil.ItemCallback<Article>() {
+        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, callback)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
+
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
+    }
+
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        val article = differ.currentList[position]
+        holder.bind(article, onItemClickListener)
+    }
+}

@@ -1,6 +1,5 @@
 package ru.kosproger.news.models
 
-import androidx.core.view.ContentInfoCompat.Source
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,7 +11,7 @@ data class Article(
     val content: String,
     val description: String,
     val publishedAt: String,
-    val source: Source,
+    val source: ru.kosproger.news.models.Source,
     val title: String,
     val url: String,
     val urlToImage: String

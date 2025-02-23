@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.kosproger.news.data.api.NewsService
 import ru.kosproger.news.utils.Constants.Companion.BASE_URL
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -26,7 +27,10 @@ object AppModule {
     @Provides
     fun okHttpClient() = OkHttpClient.Builder()
         .addInterceptor(logging())
+        .readTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(30, TimeUnit.SECONDS)
         .build()
+
 
     @Provides
     @Singleton
