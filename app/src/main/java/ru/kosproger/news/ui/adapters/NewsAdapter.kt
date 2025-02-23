@@ -19,8 +19,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     inner class NewsViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article, onItemClickListener: ((Article) -> Unit)?) {
             Glide.with(binding.root)
-                .load("/home/user/Изображения/Обои/4ce686e077b111eea7923a7ca4cc1bdc upscaled.jpeg")
-                .placeholder(R.drawable.ic_share) // Изображение-заполнитель
+                .load(article.urlToImage)
                 .error(R.drawable.error_image) // Изображение в случае ошибки
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
