@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
     buildTypes {
@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
@@ -51,12 +50,12 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.converter.gson)
-    implementation(libs.glideCompiler)
     implementation(libs.glide)
+    kapt(libs.glideCompiler)
     androidTestImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Hilt
+    // Hilt
     implementation(libs.hilt)
     kapt(libs.hiltCompiler)
     // Room

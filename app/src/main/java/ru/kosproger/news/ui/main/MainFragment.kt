@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import ru.kosproger.news.R
 import ru.kosproger.news.databinding.FragmentMainBinding
 import ru.kosproger.news.ui.adapters.NewsAdapter
 import ru.kosproger.news.utils.Resource
@@ -18,36 +21,44 @@ class MainFragment : Fragment() {
     private val mBinding get() = _binding!!
 
     private val viewModel by viewModels<MainViewModel>()
-    lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+
+        // Установка слушателя нажатий на элементы адаптера
+        newsAdapter.setOnItemClickListener { article ->
+            val bundle = bundleOf("article" to article) // Передача объекта Article
+            view.findNavController().navigate(
+                R.id.action_mainFragment_to_detailsFragment,
+                bundle
+            )
+        }
+
+        // Наблюдение за данными из ViewModel
         viewModel.newsLiveData.observe(viewLifecycleOwner) { response ->
-            when(response) {
+            when (response) {
                 is Resource.Success -> {
                     mBinding.pagProgressBar.visibility = View.INVISIBLE
                     response.data?.let {
                         newsAdapter.differ.submitList(it.articles)
                     }
-
                 }
                 is Resource.Error -> {
                     mBinding.pagProgressBar.visibility = View.INVISIBLE
-                    response.data?.let {
-                        newsAdapter.differ.submitList(it.articles)
-                    }
+                    // Обработка ошибки
                 }
                 is Resource.Loading -> {
-                    mBinding.pagProgressBar.visibility = View.INVISIBLE
+                    mBinding.pagProgressBar.visibility = View.VISIBLE
                 }
             }
         }
@@ -59,5 +70,10 @@ class MainFragment : Fragment() {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -4,4 +4,8 @@
     <string name="hello_favorite_fragment">Hello favorite fragment</string>
     <string name="popular_news">Popular News</string>
     <string name="logo">LOGO!</string>
+    <string name="search">Search</string>
+    <string name="musk_invited">Musk invited</string>
+    <string name="description">Description</string>
+    <string name="visit_site">VisitSite</string>
 </resources>

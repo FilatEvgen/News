@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginVertical="12dp"
     android:layout_marginHorizontal="16dp">
-    
+
     <ImageView
         android:id="@+id/article_image"
         android:layout_width="88dp"
         android:layout_height="84dp"
         android:background="@drawable/bg_image_10"
+        android:contentDescription="@string/logo"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="parent" />
@@ -42,7 +43,7 @@
             android:textColor="@color/greyBlack"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textFontWeight="700"
+            android:textFontWeight="@integer/material_motion_duration_long_1"
             tools:text = "Musk invited to UK Parlament to discuss $44 billion Twitter buyout" />
 
     </LinearLayout>
@@ -52,6 +53,7 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="12dp"
+        android:contentDescription="@string/logo"
         android:src="@drawable/ic_favorite"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/article_info"
@@ -61,17 +63,10 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="12dp"
+        android:contentDescription="@string/logo"
         android:src="@drawable/ic_favorite"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_favorite"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-
-
-
-
-    
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

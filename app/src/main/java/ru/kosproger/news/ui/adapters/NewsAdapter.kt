@@ -1,6 +1,7 @@
 package ru.kosproger.news.ui.adapters
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -18,33 +19,35 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     inner class NewsViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article, onItemClickListener: ((Article) -> Unit)?) {
-            Glide.with(binding.root)
-                .load(article.urlToImage)
-                .error(R.drawable.error_image) // Изображение в случае ошибки
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        // Логируем ошибку
-                        e?.logRootCauses("Glide Error")
-                        return false // Возвращаем false, чтобы Glide продолжал обрабатывать ошибку
-                    }
+            if (!article.urlToImage.isNullOrEmpty()) {
+                Glide.with(binding.root)
+                    .load(article.urlToImage)
+                    .error(R.drawable.error_image)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.e("Glide Error", e?.localizedMessage?: "Неизвестная ошибка")
+                            return false
+                        }
 
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: com.bumptech.glide.load.DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        // Здесь вы можете выполнить действия, когда ресурс успешно загружен
-                        return false // Возвращаем false, чтобы Glide продолжал обрабатывать ресурс
-                    }
-                })
-                .into(binding.articleImage)
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: com.bumptech.glide.load.DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+                    })
+                    .into(binding.articleImage)
+            } else {
+                binding.articleImage.setImageResource(R.drawable.error_image) // Устанавливаем изображение-заглушку, если URL пустой
+            }
 
             binding.articleImage.clipToOutline = true
             binding.articleTitle.text = article.title
@@ -86,5 +89,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.bind(article, onItemClickListener)
+        Log.e("ERROR", differ.currentList.toString())
+
+        setOnItemClickListener {
+            onItemClickListener?. let { it(article) }
+        }
     }
 }
